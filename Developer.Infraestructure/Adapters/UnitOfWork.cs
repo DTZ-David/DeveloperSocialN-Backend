@@ -12,15 +12,15 @@ namespace Developer.Infraestructure.Adapters;
 public class UnitOfWork : IUnitOfWork
 {
     public IAccountService AccountService { get; }
-   
+    public IUserService UserService { get; }
     public IClaimService ClaimsService { get; }
 
     public UnitOfWork(IAccountService accountService,
-                     
+                     IUserService userService,
                       IClaimService claimsService)
     {
         AccountService = accountService;
-       
+        UserService = userService;
         ClaimsService = claimsService;
     }
 }

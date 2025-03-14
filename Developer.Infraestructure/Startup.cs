@@ -29,7 +29,7 @@ public static class Startup
             .AddMapper()
             .AddPersistence(configuration)
             .AddClaims()    
-           .AddAuthorization(); // 🔹 Agrega esto
+           .AddAuthorization(); 
     }
 
     public static void UseInfrastructure

@@ -17,7 +17,7 @@ public static class LocalizationExtension
 {
     public static IServiceCollection AddInternationalization(this IServiceCollection services)
     {
-        services.AddLocalization(); // 🔹 Registra IStringLocalizerFactory
+        services.AddLocalization(); 
         services.AddTransient<ILocalizationService, LocalizationService>();
         services.AddScoped<CultureFilter>();
 
