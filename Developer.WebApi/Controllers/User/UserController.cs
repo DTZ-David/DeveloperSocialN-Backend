@@ -1,5 +1,6 @@
 ﻿using Developer.Application.UseCases.User.Commands;
 using Developer.Application.UseCases.User.Dtos;
+using Developer.Application.UseCases.User.Commands.UserTest.command;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
 using MediatR;
@@ -16,7 +17,7 @@ namespace Developer.WebApi.Controllers.User;
 [Route(BaseRoute.BaseRouteUrl)]
 public class UserController : BaseController
 {
-
+    
     /// <summary>
     /// Retrieves client headquarters by ID.
     /// </summary>
@@ -31,4 +32,6 @@ public class UserController : BaseController
     {
         return await Mediator.Send(command);
     }
+    
+    
 }

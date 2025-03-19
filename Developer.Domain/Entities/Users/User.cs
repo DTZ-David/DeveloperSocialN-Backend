@@ -10,8 +10,17 @@ namespace Developer.Domain.Entities.Users;
 
 class User
 {
+    public User( string email, string username, string passwordHash, string profilePicture)
+    {
+        Username = username;
+        Email = email;
+        PasswordHash = passwordHash;
+        ProfilePicture = profilePicture;
+    }
+
     [BsonRepresentation(BsonType.ObjectId)]
     public string Username { get; set; }
+
     public string Email { get; set; }
     public string PasswordHash { get; set; }
     public string ProfilePicture { get; set; }

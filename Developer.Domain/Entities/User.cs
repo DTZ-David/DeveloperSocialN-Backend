@@ -17,7 +17,6 @@ public class User : BaseEntity<string>
     public User(
                 string email,
                 string userName,
-               
                 string password
         )
     {
