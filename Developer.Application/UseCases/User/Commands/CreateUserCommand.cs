@@ -2,17 +2,13 @@
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Developer.Application.UseCases.User.Commands;
 
 public record CreateUserCommand(
-    string email,
-    string userName,
-    string password
-    ) : IRequest<ActionResult<Response<UserDto>>>;
-
+    string Email,
+    string UserName,
+    string Password,
+    string Bio = "",
+    string ProfilePicture = ""
+) : IRequest<ActionResult<Response<UserDto>>>;

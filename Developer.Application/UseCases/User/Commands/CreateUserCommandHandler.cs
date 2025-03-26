@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Developer.Domain.Common.Enums;
 
+
 namespace Developer.Application.UseCases.User.Commands;
 
 public record CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ActionResult<Response<UserDto>>>
@@ -25,15 +26,21 @@ public record CreateUserCommandHandler : IRequestHandler<CreateUserCommand, Acti
     public async Task<ActionResult<Response<UserDto>>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
 
-     Domain.Entities.User user = new
-     (
-        request.userName,
-        request.email,
-        request.password
-     );
+        var user = new Domain.Entities.User(
+            email: request.Email,
+            userName: request.UserName,
+            password: request.Password,
+            bio: request.Bio,
+            profilePicture: request.ProfilePicture
+        );
+
 
         await _unitOfWork.UserService.CreateUserAsync(user);
-        var response = new Response<string>((int)MessageStatusCode.Create, user.Id);
+
+        var userDto = _mapper.Map<UserDto>(user);
+
+        var response = new Response<UserDto>((int)MessageStatusCode.Create, userDto);
+
         return new CreatedResult(string.Empty, response);
     }
 }
