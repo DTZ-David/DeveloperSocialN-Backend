@@ -5,6 +5,7 @@ using Developer.Infraestructure.Extensions.JsonWebToken;
 using Developer.Infraestructure.Extensions.Localization;
 using Developer.Infraestructure.Extensions.Mapper;
 using Developer.Infraestructure.Extensions.Mediador;
+using Developer.Infraestructure.Extensions.Middleware;
 using Developer.Infraestructure.Extensions.Persistence;
 using Developer.Infraestructure.Extensions.Services;
 using Developer.Infraestructure.Extensions.Swagger;
@@ -29,8 +30,9 @@ public static class Startup
             .AddMapper()
             .AddPersistence(configuration)
             .AddClaims()    
-           .AddAuthorization();
-           
+            .AddAuthorization()
+            .AddCustomMiddleware();
+
     }
 
     public static void UseInfrastructure
@@ -43,7 +45,7 @@ public static class Startup
         builder
             .UseSwagger(environment)
             .UseAuthentication()
-            .UseAuthorization();
-            
+            .UseAuthorization()
+            .UseCustomMiddleware();
     }
 }
