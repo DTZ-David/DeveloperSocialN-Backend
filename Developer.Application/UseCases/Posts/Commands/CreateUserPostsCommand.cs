@@ -1,9 +1,9 @@
-using Developer.Application.UseCases.User.Dtos;
+using Developer.Application.UseCases.Posts.Dtos;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Developer.Application.UseCases.User.Commands;
+namespace Developer.Application.UseCases.Posts.Commands;
 
 public record CreateUserPostsCommand(
     string AuthorId,

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Developer.Application.UseCases.User.Dtos;
+namespace Developer.Application.UseCases.Posts.Dtos;
 
 public record UserPostsDto(
          string Id,

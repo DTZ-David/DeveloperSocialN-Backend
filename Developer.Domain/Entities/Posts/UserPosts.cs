@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
-namespace Developer.Domain.Entities
+namespace Developer.Domain.Entities.Posts
 {
     [BsonIgnoreExtraElements]
     public class userPosts : BaseEntity<string> 

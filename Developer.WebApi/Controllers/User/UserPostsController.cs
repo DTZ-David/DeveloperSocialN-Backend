@@ -1,6 +1,5 @@
-using Developer.Application.UseCases.User.Commands;
-using Developer.Application.UseCases.User.Dtos;
-
+using Developer.Application.UseCases.Posts.Commands;
+using Developer.Application.UseCases.Posts.Dtos;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
 using MediatR;

@@ -6,35 +6,37 @@ using Developer.Domain.Ports;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Developer.Domain.Common.Enums;
+using Developer.Application.UseCases.User.Commands;
 
 
-namespace Developer.Application.UseCases.User.Commands;
 
-public record CreateUserCommandHandler : IRequestHandler<CreateUserCommand, ActionResult<Response<UserDto>>>
+namespace Developer.Application.UseCases.Users.Commands;
+
+public record CreateUsersCommandHandler : IRequestHandler<CreateUsersCommand, ActionResult<Response<UserDto>>>
 {
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ILocalizationService _localizationService;
 
-    public CreateUserCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ILocalizationService localizationService)
+    public CreateUsersCommandHandler(IMapper mapper, IUnitOfWork unitOfWork, ILocalizationService localizationService)
     {
         _mapper = mapper;
         _unitOfWork = unitOfWork;
         _localizationService = localizationService;
     }
 
-    public async Task<ActionResult<Response<UserDto>>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ActionResult<Response<UserDto>>> Handle(CreateUsersCommand request, CancellationToken cancellationToken)
     {
 
-        var user = new Domain.Entities.User(
+        var user = new Domain.Entities.User.User(
             email: request.Email,
-            userName: request.UserName,
+            username: request.UserName,
             password: request.Password,
             bio: request.Bio,
-            profilePicture: request.ProfilePicture
+            profilePicture: request.ProfilePicture,
+            preferences : request.Preferences.ProgrammingLanguages
         );
-
-
+        
         await _unitOfWork.UserService.CreateUserAsync(user);
 
         var userDto = _mapper.Map<UserDto>(user);

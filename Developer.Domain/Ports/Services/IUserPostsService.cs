@@ -1,4 +1,4 @@
-using Developer.Domain.Entities;
+using Developer.Domain.Entities.Posts;
 using System.Threading.Tasks;
 
 namespace Developer.Domain.Ports.Services

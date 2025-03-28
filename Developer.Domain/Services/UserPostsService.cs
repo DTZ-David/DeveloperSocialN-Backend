@@ -1,8 +1,8 @@
-using Developer.Domain.Entities;
 using Developer.Domain.Ports.Configuration.Localization;
 using Developer.Domain.Ports;
 using Developer.Domain.Ports.Services;
 using System.Threading.Tasks;
+using Developer.Domain.Entities.Posts;
 
 namespace Developer.Domain.Services
 {

@@ -1,15 +1,15 @@
 using AutoMapper;
-using Developer.Application.UseCases.User.Dtos;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.Domain.Ports.Configuration.Localization;
 using Developer.Domain.Ports;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Developer.Domain.Common.Enums;
+using Developer.Application.UseCases.Posts.Dtos;
 
 
 
-namespace Developer.Application.UseCases.User.Commands
+namespace Developer.Application.UseCases.Posts.Commands
 {
     public record CreatePostCommandHandler : IRequestHandler<CreateUserPostsCommand, ActionResult<Response<UserPostsDto>>>
     {
@@ -25,7 +25,7 @@ namespace Developer.Application.UseCases.User.Commands
         public async Task<ActionResult<Response<UserPostsDto>>> Handle(CreateUserPostsCommand request, CancellationToken cancellationToken)
         {
             // Crear la entidad userPosts con los datos del comando
-            var userPosts = new Domain.Entities.userPosts(
+            var userPosts = new Domain.Entities.Posts.userPosts(
                 authorId: request.AuthorId,
                 codeSnippet: request.CodeSnippet,
                 description: request.Description,

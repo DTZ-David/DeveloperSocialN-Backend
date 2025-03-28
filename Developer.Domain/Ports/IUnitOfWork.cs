@@ -13,6 +13,5 @@ public interface IUnitOfWork
     IAccountService AccountService { get; }
     IClaimService ClaimsService { get; }
     IUserService UserService { get; }
-
-    IPostService PostService { get; }
+    IUserPostsService PostService { get; }
 }

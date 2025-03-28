@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Developer.Domain.Ports.Configuration.Localization;
 using Developer.Domain.Entities;
+using Developer.Domain.Entities.User;
 
 namespace Developer.Domain.Services;
 

@@ -28,7 +28,7 @@ public class UserController : BaseController
     /// <response code="200">Successful query.</response>
     /// <response code="404">Query error, client's headquarters not found.</response>
     [HttpPost]
-    public async Task<ActionResult<Response<UserDto>>> CreateUser(string language, [FromBody] CreateUserCommand command)
+    public async Task<ActionResult<Response<UserDto>>> CreateUser(string language, [FromBody] CreateUsersCommand command)
     {
         return await Mediator.Send(command);
     }
