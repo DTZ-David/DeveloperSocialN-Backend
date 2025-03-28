@@ -6,11 +6,10 @@ using Developer.Domain.Ports;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Developer.Domain.Common.Enums;
-using Developer.Application.UseCases.User.Commands;
 
 
 
-namespace Developer.Application.UseCases.Users.Commands;
+namespace Developer.Application.UseCases.Users.Commands.CreateUsers;
 
 public record CreateUsersCommandHandler : IRequestHandler<CreateUsersCommand, ActionResult<Response<UserDto>>>
 {

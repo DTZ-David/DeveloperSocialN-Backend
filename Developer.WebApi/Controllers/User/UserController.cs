@@ -1,6 +1,7 @@
-﻿using Developer.Application.UseCases.User.Commands;
-using Developer.Application.UseCases.User.Dtos;
-
+﻿using Developer.Application.UseCases.User.Dtos;
+using Developer.Application.UseCases.Users.Commands.AuthenticationUser;
+using Developer.Application.UseCases.Users.Commands.CreateUsers;
+using Developer.Application.UseCases.Users.Dtos;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
 using MediatR;
@@ -27,11 +28,23 @@ public class UserController : BaseController
     /// <param name="language">The language for the response (e.g., "en", "es").</param>
     /// <response code="200">Successful query.</response>
     /// <response code="404">Query error, client's headquarters not found.</response>
-    [HttpPost]
+    [HttpPost("registerUser")]
     public async Task<ActionResult<Response<UserDto>>> CreateUser(string language, [FromBody] CreateUsersCommand command)
     {
         return await Mediator.Send(command);
     }
-    
-    
+
+    /// <summary>
+    /// Authenticate user in mobile apps
+    /// </summary>
+    /// <remarks>
+    /// To authenticate in mobile apps it is necessary to provide the email and password
+    /// </remarks>
+    [HttpPost("loginApp")]
+    public async Task<ActionResult<Response<AuthenticationUserDto>>> AuthenticationAppMovil([FromBody] AccountDto accountDto)
+    {
+        var command = new AuthenticationUserCommand(accountDto.Email, accountDto.Password);
+        return await Mediator.Send(command);
+    }
+
 }

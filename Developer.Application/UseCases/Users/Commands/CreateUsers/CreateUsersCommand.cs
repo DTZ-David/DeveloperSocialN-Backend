@@ -3,7 +3,7 @@ using Developer.Domain.Common.Wrappers.CustomResponse;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Developer.Application.UseCases.User.Commands;
+namespace Developer.Application.UseCases.Users.Commands.CreateUsers;
 
 public record CreateUsersCommand(
     string Email,
