@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Developer.Domain.Ports.Services
 {
-    public interface IPostService
+    public interface IUserPostsService
     {
-        Task<Post> CreatePostAsync(Post post);
+        Task<userPosts> CreatePostAsync(userPosts post);
     }
 }

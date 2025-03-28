@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 namespace Developer.Domain.Services
 {
     [ApplicationService]
-    public class PostService : IPostService
+    public class UserPostsService : IUserPostsService
     {
-        private readonly IGenericRepository<Post> _postRepository;
+        private readonly IGenericRepository<userPosts> _postRepository;
         private readonly ILocalizationService _localizationService;
 
-        public PostService(IGenericRepository<Post> postRepository, ILocalizationService localizationService)
+        public UserPostsService(IGenericRepository<userPosts> postRepository, ILocalizationService localizationService)
         {
             _postRepository = postRepository;
             _localizationService = localizationService;
         }
 
-        public async Task<Post> CreatePostAsync(Post post)
+        public async Task<userPosts> CreatePostAsync(userPosts userPosts)
         {
-            await _postRepository.Add(post);
-            return post;
+            await _postRepository.Add(userPosts);
+            return userPosts;
         }
     }
 }

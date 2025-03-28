@@ -7,37 +7,18 @@ using System.Collections.Generic;
 namespace Developer.Domain.Entities
 {
     [BsonIgnoreExtraElements]
-    public class Post : BaseEntity<string> 
+    public class userPosts : BaseEntity<string> 
     {
-        [BsonElement("authorId")]
-        [BsonRepresentation(BsonType.ObjectId)]
         public string AuthorId { get; private set; }
-
-        [BsonElement("codeSnippet")]
         public string CodeSnippet { get; private set; }
-
-        [BsonElement("comments")]
         public List<string> Comments { get; private set; } = new List<string>();
-
-        [BsonElement("createdAt")]
         public DateTime CreatedAt { get; private set; }
-
-        [BsonElement("description")]
         public string Description { get; private set; }
-
-        [BsonElement("language")]
         public string Language { get; private set; }
-
-        [BsonElement("likes")]
         public List<string> Likes { get; private set; } = new List<string>();
-
-        [BsonElement("tags")]
         public List<string> Tags { get; private set; } = new List<string>();
-
-        [BsonElement("updatedAt")]
         public DateTime UpdatedAt { get; private set; }
-
-        public Post(
+        public userPosts(
             string authorId,
             string codeSnippet,
             string description,

@@ -11,7 +11,7 @@ using Developer.Domain.Common.Enums;
 
 namespace Developer.Application.UseCases.User.Commands
 {
-    public record CreatePostCommandHandler : IRequestHandler<CreatePostCommand, ActionResult<Response<PostDto>>>
+    public record CreatePostCommandHandler : IRequestHandler<CreateUserPostsCommand, ActionResult<Response<UserPostsDto>>>
     {
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
@@ -22,10 +22,10 @@ namespace Developer.Application.UseCases.User.Commands
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ActionResult<Response<PostDto>>> Handle(CreatePostCommand request, CancellationToken cancellationToken)
+        public async Task<ActionResult<Response<UserPostsDto>>> Handle(CreateUserPostsCommand request, CancellationToken cancellationToken)
         {
-            // Crear la entidad Post con los datos del comando
-            var post = new Domain.Entities.Post(
+            // Crear la entidad userPosts con los datos del comando
+            var userPosts = new Domain.Entities.userPosts(
                 authorId: request.AuthorId,
                 codeSnippet: request.CodeSnippet,
                 description: request.Description,
@@ -33,14 +33,14 @@ namespace Developer.Application.UseCases.User.Commands
                 tags: request.Tags
             );
 
-            // Guardar el post en la base de datos
-            await _unitOfWork.PostService.CreatePostAsync(post);
+            // Guardar el userPosts en la base de datos
+            await _unitOfWork.PostService.CreatePostAsync(userPosts);
 
-            // Mapear la entidad Post a PostDto
-            var postDto = _mapper.Map<PostDto>(post);
+            // Mapear la entidad userPosts a UserPostsDto
+            var UserPostsDto = _mapper.Map<UserPostsDto>(userPosts);
 
             // Crear la respuesta
-            var response = new Response<PostDto>((int)MessageStatusCode.Create, postDto);
+            var response = new Response<UserPostsDto>((int)MessageStatusCode.Create, UserPostsDto);
 
             // Devolver el resultado creado
             return new CreatedResult(string.Empty, response);

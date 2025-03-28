@@ -5,11 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Developer.Application.UseCases.User.Commands;
 
-public record CreatePostCommand(
+public record CreateUserPostsCommand(
     string AuthorId,
     string CodeSnippet,
     string Description,
     string Language,
     List<string>? Tags = null
-) : IRequest<ActionResult<Response<PostDto>>>;
+) : IRequest<ActionResult<Response<UserPostsDto>>>;
 

@@ -15,7 +15,7 @@ namespace Developer.WebApi.Controllers.User;
 /// </summary>
 [ApiController]
 [Route(BaseRoute.BaseRouteUrl)]
-public class PostController : BaseController
+public class UserPostsController : BaseController
 {
     
     /// <summary>
@@ -28,7 +28,7 @@ public class PostController : BaseController
     /// <response code="200">Successful query.</response>
     /// <response code="404">Query error, client's headquarters not found.</response>
     [HttpPost]
-    public async Task<ActionResult<Response<PostDto>>> CreateUser(string language, [FromBody] CreatePostCommand command)
+    public async Task<ActionResult<Response<UserPostsDto>>> CreateUser(string language, [FromBody] CreateUserPostsCommand command)
     {
         return await Mediator.Send(command);
     }

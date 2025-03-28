@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Developer.Application.UseCases.User.Dtos;
 
-public record PostDto(
+public record UserPostsDto(
          string Id,
          string AuthorId,
          string CodeSnippet,
