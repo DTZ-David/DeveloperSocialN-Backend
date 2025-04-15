@@ -1,5 +1,6 @@
 using Developer.Application.UseCases.Posts.Commands;
 using Developer.Application.UseCases.Posts.Dtos;
+using Developer.Application.UseCases.Posts.Queries.GetUserPostForFeed;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
 using MediatR;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Developer.WebApi.Controllers.User;
+namespace Developer.WebApi.Controllers.Posts;
 
 /// <summary>
 /// Controller for managing areas related operations.
@@ -31,6 +32,34 @@ public class UserPostsController : BaseController
     {
         return await Mediator.Send(command);
     }
-    
-    
+
+    [HttpGet]
+    [Route("GetFeed")]
+    public async Task<ActionResult<Response<IEnumerable<UserPostsDto>>>> GetUserPostsForFeed()
+    {
+        return await Mediator.Send(new GetUserPostsForFeedCommand());
+    }
+
+    [HttpGet("test-token")]
+    [Authorize]
+    public IActionResult TestToken()
+    {
+        return Ok(new
+        {
+            IsAuthenticated = User.Identity.IsAuthenticated,
+            Claims = User.Claims.Select(c => new { c.Type, c.Value })
+        });
+    }
+
+    [Authorize]
+    [HttpGet("token/test")]
+    public IActionResult TestToken2()
+    {
+        var userId = User.FindFirst("user_id")?.Value;
+        var email = User.FindFirst("email")?.Value;
+
+        return Ok(new { userId, email });
+    }
+
+
 }

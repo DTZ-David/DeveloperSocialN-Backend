@@ -6,4 +6,4 @@ using System.Threading.Tasks;
 
 namespace Developer.Domain.Settings.Claims;
 
-public record UserClaim(string UserId);
+public record UserClaim(string UserId, string Email);

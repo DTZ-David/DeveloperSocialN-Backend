@@ -22,7 +22,8 @@ public class ClaimService : IClaimService
 
     public Task<UserClaim> GetUserClaim()
     {
-        var user = new UserClaim(GetClaim(ClaimOption.UserId));
+        var user = new UserClaim(GetClaim(ClaimOption.UserId),
+            GetClaim(ClaimOption.Email));
         return Task.FromResult(user);
     }
 

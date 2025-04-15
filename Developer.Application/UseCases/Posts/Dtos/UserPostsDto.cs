@@ -6,14 +6,9 @@ using System.Threading.Tasks;
 
 namespace Developer.Application.UseCases.Posts.Dtos;
 
-public record UserPostsDto(
-         string Id,
-         string AuthorId,
-         string CodeSnippet,
-         string Description,
-         string Language,
-         List<string> Tags,
-         DateTime CreatedAt,
-         DateTime UpdatedAt
-);
-    
+public record UserPostsDto()
+{
+    public string Description { get; init; }
+    public List<string> Tags { get; init; }
+    public DateTime CreatedAt { get; init; }
+}

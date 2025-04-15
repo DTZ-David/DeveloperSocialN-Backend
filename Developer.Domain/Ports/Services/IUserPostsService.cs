@@ -5,6 +5,7 @@ namespace Developer.Domain.Ports.Services
 {
     public interface IUserPostsService
     {
-        Task<userPosts> CreatePostAsync(userPosts post);
+        Task<UserPosts> CreatePostAsync(UserPosts post);
+        Task<List<UserPosts>> GetUserPostForFeed();
     }
 }

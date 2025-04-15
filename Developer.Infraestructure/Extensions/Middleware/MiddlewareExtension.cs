@@ -14,7 +14,7 @@ public static class MiddlewareExtension
     public static IServiceCollection AddCustomMiddleware(this IServiceCollection services)
     {
         services.AddTransient<GlobalExceptionHandler>();
-       // services.AddTransient<SecurityHeader>();
+        //services.AddTransient<SecurityHeader>();
 
         return services;
     }
@@ -22,7 +22,7 @@ public static class MiddlewareExtension
     public static IApplicationBuilder UseCustomMiddleware(this IApplicationBuilder app)
     {
         app.UseMiddleware<GlobalExceptionHandler>();
-       // app.UseMiddleware<SecurityHeader>();
+        //app.UseMiddleware<SecurityHeader>();
 
         return app;
     }

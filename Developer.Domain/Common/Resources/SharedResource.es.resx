@@ -121,10 +121,10 @@
     <value>Las credenciales proporcionadas son incorrectas. Por favor, inténtalo de nuevo.</value>
   </data>
   <data name="1B####" xml:space="preserve">
-    <value>asdasd</value>
+    <value>No tiene token</value>
   </data>
   <data name="1C####" xml:space="preserve">
-    <value>asdasd</value>
+    <value>No autorizado</value>
   </data>
   <data name="2A####" xml:space="preserve">
     <value>Errores de validación.</value>
@@ -142,16 +142,13 @@
     <value>Entidad no procesable.</value>
   </data>
   <data name="3A####" xml:space="preserve">
-    <value>asdasd</value>
+    <value>No autorizado</value>
   </data>
   <data name="3B####" xml:space="preserve">
     <value>Este email ya está registrado.</value>
   </data>
   <data name="3C####" xml:space="preserve">
     <value>El correo electrónico del administrador debe coincidir con los dominios registrados para este cliente.</value>
-  </data>
-  <data name="1F####" xml:space="preserve">
-    <value>Formato de token no válido.</value>
   </data>
   <data name="1G####" xml:space="preserve">
     <value>No autorizado.</value>
@@ -164,6 +161,33 @@
   </data>
   <data name="3D####" xml:space="preserve">
     <value>Ya existe un cliente con la misma razón social.</value>
+  </data>
+  <data name="2NC###" xml:space="preserve">
+    <value>La lista está vacía.</value>
+  </data>
+  <data name="4A####" xml:space="preserve">
+    <value>Sede con id {0} no se encuentra registrada.</value>
+  </data>
+  <data name="4B####" xml:space="preserve">
+    <value>Por el momento, no hay ninguna sede disponible en su ubicación actual.</value>
+  </data>
+  <data name="5A####" xml:space="preserve">
+    <value>La fecha de inicio de redención debe ser mayor que la fecha de inicio de la campaña.</value>
+  </data>
+  <data name="5B####" xml:space="preserve">
+    <value>La fecha de fin de redención debe ser mayor que la fecha de inicio de la redención.</value>
+  </data>
+  <data name="5C####" xml:space="preserve">
+    <value>El valor debe ser mayor que cero.</value>
+  </data>
+  <data name="5D####" xml:space="preserve">
+    <value>La latitud debe estar entre -90 y 90.</value>
+  </data>
+  <data name="5E####" xml:space="preserve">
+    <value>La longitud debe estar entre -180 y 180.</value>
+  </data>
+  <data name="1F####" xml:space="preserve">
+    <value>Formato de token no válido.</value>
   </data>
   <data name="9AC###" xml:space="preserve">
     <value>Area con id {0} ya registrada.</value>
@@ -182,9 +206,6 @@
   </data>
   <data name="9CN###" xml:space="preserve">
     <value>Cliente con id {0} no encontrado.</value>
-  </data>
-  <data name="2NC###" xml:space="preserve">
-    <value>La lista está vacía.</value>
   </data>
   <data name="9DN###" xml:space="preserve">
     <value>El dominio {0} no está disponible. Por favor, contacta al administrador.</value>
@@ -249,28 +270,7 @@
   <data name="9CPN##" xml:space="preserve">
     <value>No se encontró la configuración del punto del cliente.</value>
   </data>
-  <data name="4A####" xml:space="preserve">
-    <value>Sede con id {0} no se encuentra registrada.</value>
-  </data>
   <data name="9RNF##" xml:space="preserve">
     <value>No se encontraron rutas en tu ubicación actual.</value>
-  </data>
-  <data name="4B####" xml:space="preserve">
-    <value>Por el momento, no hay ninguna sede disponible en su ubicación actual.</value>
-  </data>
-  <data name="5A####" xml:space="preserve">
-    <value>La fecha de inicio de redención debe ser mayor que la fecha de inicio de la campaña.</value>
-  </data>
-  <data name="5B####" xml:space="preserve">
-    <value>La fecha de fin de redención debe ser mayor que la fecha de inicio de la redención.</value>
-  </data>
-  <data name="5C####" xml:space="preserve">
-    <value>El valor debe ser mayor que cero.</value>
-  </data>
-  <data name="5D####" xml:space="preserve">
-    <value>La latitud debe estar entre -90 y 90.</value>
-  </data>
-  <data name="5E####" xml:space="preserve">
-    <value>La longitud debe estar entre -180 y 180.</value>
   </data>
 </root>

@@ -22,7 +22,7 @@ public static class JwtExtension
         // Obtener valores desde appsettings.json
         var jwtSettings = configuration.GetSection("JwtSettings");
         var secretKey = Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!);
-        var encryptKey = Encoding.UTF8.GetBytes(jwtSettings["EncryptKey"]!);
+        var encryptKey = Convert.FromBase64String(jwtSettings["EncryptKey"]!);
         var expirationMinutes = int.Parse(jwtSettings["ExpirationMinutes"]!);
 
         services

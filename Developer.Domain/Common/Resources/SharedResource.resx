@@ -122,6 +122,7 @@
   </data>
   <data name="1B####" xml:space="preserve">
     <value>Not authorized</value>
+    <comment>No tiene token</comment>
   </data>
   <data name="1C####" xml:space="preserve">
     <value>You don't have permission</value>
@@ -151,7 +152,7 @@
     <value>Sign up for Appimotion+ or correct your credentials</value>
   </data>
   <data name="1G####" xml:space="preserve">
-    <value>asdasd</value>
+    <value>No autorizado</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="1H####" type="System.Resources.ResXNullRef, System.Windows.Forms">

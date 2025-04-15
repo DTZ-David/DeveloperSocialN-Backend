@@ -71,7 +71,7 @@ public class JwtService : IJwtService
     {
         ClaimOption.UserId,
         ClaimOption.Email,
-        ClaimOption.UserId
+
     };
 
         var responseClaims = new List<Claim>();
