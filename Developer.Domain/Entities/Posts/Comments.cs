@@ -10,7 +10,7 @@ namespace Developer.Domain.Entities.Posts
     public class Comments : BaseEntity<string>
     {
         public string AuthorId { get; set; }
-        public string Comment { get; set; }
+        public string Content { get; set; }
         public Comments()
         {
             

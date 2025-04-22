@@ -7,5 +7,8 @@ namespace Developer.Domain.Ports.Services
     {
         Task<UserPosts> CreatePostAsync(UserPosts post);
         Task<List<UserPosts>> GetUserPostForFeed();
+
+        Task<bool> UpdateCommentAsync(string postId, string commentId, string newContent);
+        Task<bool> AddReactionAsync(string postId, string userId, string reactionType);
     }
 }

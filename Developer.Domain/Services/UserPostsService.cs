@@ -31,5 +31,41 @@ namespace Developer.Domain.Services
 
             return responsePost.ToList();
         }
+
+        public async Task<bool> UpdateCommentAsync(string postId, string commentId, string newContent)
+        {
+            var userPost = await _postRepository.GetById(postId);
+            if (userPost == null) return false;
+
+            var comment = userPost.Comments.FirstOrDefault(c => c.Id == commentId);
+            if (comment == null) return false;
+
+            comment.Content = newContent;
+            comment.CreationDate = DateTime.UtcNow;
+
+            await _postRepository.Update(userPost); // <== Aquí usamos la sobrecarga correcta
+            return true;
+        }
+
+        public async Task<bool> AddReactionAsync(string postId, string userId, string reactionType)
+        {
+            var userPost = await _postRepository.GetById(postId);
+            if (userPost == null) return false;
+
+            // Aquí agregamos la reacción al post
+            userPost.Reactions.Add(new Reaction
+            {
+                UserId = userId,
+                Type = reactionType
+            });
+
+            var update = Builders<UserPosts>.Update.Set(x => x.Reactions, userPost.Reactions);
+
+            // Usa la actualización con definición de MongoDB
+            await _postRepository.Update(postId, update); // Aquí se utiliza Update con UpdateDefinition
+            return true;
+        }
+
+
     }
 }
