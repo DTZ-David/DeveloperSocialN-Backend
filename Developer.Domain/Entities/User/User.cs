@@ -26,6 +26,7 @@ public class User : BaseEntity<string>
     public string Username { get; set; }
     public string? ProfilePicture { get; set; }
     public string? Bio { get; set; }
+    public InteractionLog interactionLog { get; set; }
     public SocialInfo Social { get; set; }
     public Preferences Preferences { get; set; }
     public UserStats Stats { get; set; }

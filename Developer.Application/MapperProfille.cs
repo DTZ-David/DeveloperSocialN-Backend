@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Developer.Application.UseCases.ActivityLog.Dtos;
 using Developer.Application.UseCases.Posts.Dtos;
 using Developer.Application.UseCases.User.Dtos;
 using Developer.Domain.Entities;
@@ -12,5 +13,6 @@ public class MapperProfile : Profile
     {
         CreateMap<User, UserDto>().ReverseMap();
         CreateMap<UserPosts, UserPostsDto>().ReverseMap();
+        CreateMap<InteractionLog, InteractionLogDto>().ReverseMap();
     }
 }
