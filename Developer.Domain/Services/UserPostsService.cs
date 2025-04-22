@@ -52,19 +52,15 @@ namespace Developer.Domain.Services
             var userPost = await _postRepository.GetById(postId);
             if (userPost == null) return false;
 
-            // Aquí agregamos la reacción al post
-            userPost.Reactions.Add(new Reaction
-            {
-                UserId = userId,
-                Type = reactionType
-            });
+            // Agregar la nueva reacción
+            var reaction = new Reaction(userId, reactionType);
+            userPost.Reactions.Add(reaction);  // Añadir la reacción al post
 
-            var update = Builders<UserPosts>.Update.Set(x => x.Reactions, userPost.Reactions);
-
-            // Usa la actualización con definición de MongoDB
-            await _postRepository.Update(postId, update); // Aquí se utiliza Update con UpdateDefinition
+            // Actualizar el post en la base de datos
+            await _postRepository.Update(userPost);  // Aquí se actualiza el post completo
             return true;
         }
+
 
 
     }

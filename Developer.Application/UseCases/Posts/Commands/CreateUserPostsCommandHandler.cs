@@ -49,7 +49,8 @@ namespace Developer.Application.UseCases.Posts.Commands
                     comments: commentsPostUser,
                     description: request.Description,
                     likes: 0,
-                    tags: request.Tags!
+                    tags: request.Tags!,
+                    reactions: new List<Reaction>()
                 );
 
                 await _unitOfWork.PostService.CreatePostAsync(userPosts);

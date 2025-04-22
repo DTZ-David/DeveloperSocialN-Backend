@@ -9,7 +9,7 @@ namespace Developer.Domain.Entities.Posts
     [BsonIgnoreExtraElements]
     public class UserPosts : BaseEntity<string> 
     {
-        public UserPosts(string authorId, string codeSnippet, List<Comments> comments, string description, int likes, List<string> tags)
+        public UserPosts(string authorId, string codeSnippet, List<Comments> comments, string description, int likes, List<string> tags, List<Reaction> reactions)
         {
             AuthorId = authorId;
             CodeSnippet = codeSnippet;
@@ -17,6 +17,7 @@ namespace Developer.Domain.Entities.Posts
             Description = description;
             Likes = likes;
             Tags = tags;
+            Reactions = reactions;
         }
 
         public string AuthorId { get;  set; }
@@ -25,6 +26,7 @@ namespace Developer.Domain.Entities.Posts
         public string Description { get;  set; }
         public int Likes { get;  set; }
         public List<string> Tags { get;  set; } 
+        public List<Reaction> Reactions { get; set; }
        
     }
 }
