@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Developer.Domain.Entities.User;
+using Developer.Domain.Common.Enums;
+using Developer.Domain.Common.Exceptions;
 
 namespace Developer.Domain.Services;
 [ApplicationService] 
@@ -27,4 +29,26 @@ class UserService : IUserService
         await _clientRepository.Add(usuario);
         return usuario;
     }
+
+    public async Task<User> GetUserById(string id)
+    {
+        var user = await _clientRepository.GetById(id);
+        _ = user ?? throw new BusinessException(_localizationService.GetLocalizedByKey(MessageCode.NotFound),
+            (int)MessageStatusCode.NotFound);
+        return user!;
+    }
+    public async Task<User> UpdateUser(User user)
+    {
+        var existingUser = await _clientRepository.GetById(user.Id);
+        if (existingUser == null)
+        {
+            throw new BusinessException(_localizationService.GetLocalizedByKey(MessageCode.NotFound),
+                (int)MessageStatusCode.NotFound);
+        }
+
+        await _clientRepository.Update(user);
+        return user;
+    }
+
+
 }
