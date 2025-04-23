@@ -6,7 +6,7 @@ using Developer.Domain.Ports.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Developer.Application.UseCases.Posts.Commands;
+namespace Developer.Application.UseCases.Posts.Commands.ReacctionCommands;
 
     public class AddReactionCommandHandler : IRequestHandler<AddReactionCommand, Response<string>>
 {

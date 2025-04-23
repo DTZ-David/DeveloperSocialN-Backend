@@ -11,7 +11,7 @@ using Developer.Domain.Ports.Configuration.Localization;
 
 
 
-namespace Developer.Application.UseCases.Posts.Commands
+namespace Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand
 {
     public record CreatePostCommandHandler : IRequestHandler<CreateUserPostsCommand, ActionResult<Response<UserPostsDto>>>
     {
