@@ -17,7 +17,7 @@ namespace Developer.WebApi.Controllers.Posts;
 [Route(BaseRoute.BaseRouteUrl)]
 public class UserPostsController : BaseController
 {
-    
+
     /// <summary>
     /// Retrieves client headquarters by ID.
     /// </summary>
@@ -60,6 +60,19 @@ public class UserPostsController : BaseController
 
         return Ok(new { userId, email });
     }
+    [HttpPut("comment/update")]
+    public async Task<ActionResult<Response<bool>>> UpdateComment([FromBody] UpdateCommentCommand command)
+    {
+        return await Mediator.Send(command);
+    }
+
+    [HttpPut("reactions")]
+    public async Task<ActionResult<Response<string>>> UpdateReaction([FromBody] AddReactionCommand command)
+    {
+        return await Mediator.Send(command);
+    }
+
+
 
 
 }

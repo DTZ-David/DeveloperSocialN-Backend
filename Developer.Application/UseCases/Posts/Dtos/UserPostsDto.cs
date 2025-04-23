@@ -12,3 +12,4 @@ public record UserPostsDto()
     public List<string> Tags { get; init; }
     public DateTime CreatedAt { get; init; }
 }
+

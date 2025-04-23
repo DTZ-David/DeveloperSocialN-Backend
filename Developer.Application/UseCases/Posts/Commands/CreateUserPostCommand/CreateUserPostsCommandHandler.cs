@@ -11,7 +11,7 @@ using Developer.Domain.Ports.Configuration.Localization;
 
 
 
-namespace Developer.Application.UseCases.Posts.Commands
+namespace Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand
 {
     public record CreatePostCommandHandler : IRequestHandler<CreateUserPostsCommand, ActionResult<Response<UserPostsDto>>>
     {
@@ -49,7 +49,8 @@ namespace Developer.Application.UseCases.Posts.Commands
                     comments: commentsPostUser,
                     description: request.Description,
                     likes: 0,
-                    tags: request.Tags!
+                    tags: request.Tags!,
+                    reactions: new List<Reaction>()
                 );
 
                 await _unitOfWork.PostService.CreatePostAsync(userPosts);

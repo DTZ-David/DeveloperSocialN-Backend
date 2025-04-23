@@ -3,7 +3,7 @@ using Developer.Domain.Common.Wrappers.CustomResponse;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Developer.Application.UseCases.Posts.Commands;
+namespace Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand;
 
 public record CreateUserPostsCommand(
     string AuthorId,
