@@ -2,30 +2,28 @@ using Developer.Domain.Common.Enums;
 using Developer.Domain.Common.Exceptions;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.Domain.Ports;
+using Developer.Domain.Ports.Services;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Developer.Application.UseCases.Posts.Commands
+namespace Developer.Application.UseCases.Posts.Commands;
+
+    public class AddReactionCommandHandler : IRequestHandler<AddReactionCommand, Response<string>>
 {
-    public class AddReactionCommandHandler : IRequestHandler<AddReactionCommand, ActionResult<Response<bool>>>
+    private readonly IUserPostsService _service;
+
+    public AddReactionCommandHandler(IUserPostsService service)
     {
-        private readonly IUnitOfWork _unitOfWork;
+        _service = service;
+    }
 
-        public AddReactionCommandHandler(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
-
-        public async Task<ActionResult<Response<bool>>> Handle(AddReactionCommand request, CancellationToken cancellationToken)
-        {
-            var result = await _unitOfWork.PostService.AddReactionAsync(request.PostId, request.UserId, request.ReactionType);
-
-            if (!result)
-            {
-                throw new BusinessException("Error al agregar reacción", (int)MessageStatusCode.BadRequest);
-            }
-
-            return new OkObjectResult(new Response<bool>((int)MessageStatusCode.Succes, true));
-        }
+    public async Task<Response<string>> Handle(AddReactionCommand request, CancellationToken cancellationToken)
+    {
+        await _service.UpdateReactionAsync(request.PostId, request.UserId, request.ReactionType);
+        
+        return new Response<string>((int)MessageStatusCode.Succes, "Reacción agregada correctamente");
+        
     }
 }
+
+

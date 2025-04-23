@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Developer.Application.UseCases.Posts.Commands;
 
-public record AddReactionCommand : IRequest<ActionResult<Response<bool>>>
+public class AddReactionCommand : IRequest<Response<string>>
+
 {
-    public string PostId { get; init; }
-    public string UserId { get; init; }
-    public string ReactionType { get; init; }
+    public string PostId { get; set; }
+    public string UserId { get; set; }
+    public string ReactionType { get; set; }
 }

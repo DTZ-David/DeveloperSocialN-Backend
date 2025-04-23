@@ -40,25 +40,22 @@ namespace Developer.Domain.Services
             var comment = userPost.Comments.FirstOrDefault(c => c.Id == commentId);
             if (comment == null) return false;
 
-            comment.Content = newContent;
+            comment.Comment = newContent;
             comment.CreationDate = DateTime.UtcNow;
 
             await _postRepository.Update(userPost); // <== Aquí usamos la sobrecarga correcta
             return true;
         }
 
-        public async Task<bool> AddReactionAsync(string postId, string userId, string reactionType)
+        public async Task UpdateReactionAsync(string postId, string userId, string reactionType)
         {
-            var userPost = await _postRepository.GetById(postId);
-            if (userPost == null) return false;
+            var post = await _postRepository.GetById(postId);
+            if (post == null) throw new Exception("Post no encontrado");
 
-            // Agregar la nueva reacción
-            var reaction = new Reaction(userId, reactionType);
-            userPost.Reactions.Add(reaction);  // Añadir la reacción al post
+          
+            post.Likes += 1;
 
-            // Actualizar el post en la base de datos
-            await _postRepository.Update(userPost);  // Aquí se actualiza el post completo
-            return true;
+            await _postRepository.Update(post);
         }
 
 

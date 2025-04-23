@@ -66,11 +66,12 @@ public class UserPostsController : BaseController
         return await Mediator.Send(command);
     }
 
-    [HttpPost("reaction/add")]
-    public async Task<ActionResult<Response<bool>>> AddReaction([FromBody] AddReactionCommand command)
+    [HttpPut("reactions")]
+    public async Task<ActionResult<Response<string>>> UpdateReaction([FromBody] AddReactionCommand command)
     {
         return await Mediator.Send(command);
     }
+
 
 
 
