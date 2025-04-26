@@ -1,5 +1,6 @@
 ﻿using Developer.Application.UseCases.Users.Dtos;
 using Developer.Domain.Common.Enums;
+using Developer.Domain.Common.Exceptions;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.Domain.Ports;
 using MediatR;
@@ -24,10 +25,24 @@ namespace Developer.Application.UseCases.Users.Commands.AuthenticationUser
         public async Task<ActionResult<Response<AuthenticationUserDto>>> Handle(AuthenticationUserCommand request, CancellationToken cancellationToken)
         {
             var token = await _unitOfWork.AccountService.ValidateMobileApp(request.Email, request.Password);
+            var user = await _unitOfWork.UserService.GetUserByEmail(request.Email); // Asumimos que este comando te devuelve un usuario
 
-            var userAuthentication = new AuthenticationUserDto(token);
+            if (user is null)
+            {
+                throw new BusinessException($"Usuario no encontrado.",
+                    (int)MessageStatusCode.NotFound);
+            }
 
-            return new Response<AuthenticationUserDto>((int)MessageStatusCode.Succes, userAuthentication);
+            var userDetails = new AuthenticationUserDto(
+                    Token: token,
+                    Username: user.Username,
+                    ProfilePicture: user.ProfilePicture,
+                    Bio: user.Bio,
+                    PostsCount: user.Stats.PostsCount,
+                    FollowersCount: user.Social.Followers.Count);
+             
+
+            return new Response<AuthenticationUserDto>((int)MessageStatusCode.Succes, userDetails);
         }
     }
 }

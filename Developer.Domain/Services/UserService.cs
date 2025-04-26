@@ -30,6 +30,15 @@ class UserService : IUserService
         return usuario;
     }
 
+    public async Task<User> GetUserByEmail(string email)
+    {
+        var user = (await _clientRepository.FindAsync(
+             u => u.Email == email)).FirstOrDefault();
+        _ = user ?? throw new BusinessException(_localizationService.GetLocalizedByKey(MessageCode.NotFound),
+            (int)MessageStatusCode.NotFound);
+        return user!;
+    }
+
     public async Task<User> GetUserById(string id)
     {
         var user = await _clientRepository.GetById(id);

@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Developer.Application.UseCases.Users.Dtos;
 
-public record AuthenticationUserDto(string Token);
+public record AuthenticationUserDto(
+    string Token,
+    string Username,
+    string ProfilePicture,
+    string Bio,
+    int PostsCount,
+    int FollowersCount
+);
 
 public record AccountDto(string Email, string Password);

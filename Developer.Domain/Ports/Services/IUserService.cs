@@ -7,6 +7,7 @@ public interface IUserService
 {
     Task<User> CreateUserAsync(User usuario);
     Task<User> GetUserById(string id);
+    Task<User> GetUserByEmail(string email);
     Task<User> UpdateUser(User user);
 
 }
