@@ -35,6 +35,7 @@ public class UserPostsController : BaseController
         return await Mediator.Send(command);
     }
 
+    [Authorize]
     [HttpGet]
     [Route("GetFeed")]
     public async Task<ActionResult<Response<IEnumerable<UserPostsDto>>>> GetUserPostsForFeed()

@@ -25,12 +25,20 @@ namespace Developer.Domain.Services
             return userPosts;
         }
 
-        public async Task<List<UserPosts>> GetUserPostForFeed()
+        public async Task<List<UserPosts>> GetUserPostForFeed(List<string> followedUserIds, string userId)
         {
-            var responsePost = await _postRepository.GetAll();
+           
+            var allPosts = await _postRepository.FindAsync(
+                post => post.AuthorId == userId || followedUserIds.Contains(post.AuthorId)
+            );
 
-            return responsePost.ToList();
+            return allPosts
+                .OrderByDescending(p => p.CreationDate)
+                .ToList();
         }
+
+
+
 
         public async Task<bool> UpdateCommentAsync(string postId, string commentId, string newContent)
         {

@@ -1,15 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Developer.Domain.Entities.Posts;
 
-namespace Developer.Application.UseCases.Posts.Dtos;
-
-public record UserPostsDto()
-{
-    public string Description { get; init; }
-    public List<string> Tags { get; init; }
-    public DateTime CreatedAt { get; init; }
-}
+public record UserPostsDto(
+    string AuthorId,
+    string CodeSnippet,
+    List<Comments> Comments,
+    string Description,
+    List<string> Tags,
+    int Likes,
+    string UserName,
+    string ProfilePicture
+);
 

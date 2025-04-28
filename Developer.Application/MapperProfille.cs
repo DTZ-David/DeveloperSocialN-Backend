@@ -14,5 +14,6 @@ public class MapperProfile : Profile
         CreateMap<User, UserDto>().ReverseMap();
         CreateMap<UserPosts, UserPostsDto>().ReverseMap();
         CreateMap<InteractionLog, InteractionLogDto>().ReverseMap();
+       
     }
 }

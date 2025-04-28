@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Developer.Application.UseCases.Posts.Dtos;
 using Developer.Domain.Common.Enums;
+using Developer.Domain.Common.Exceptions;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.Domain.Ports;
 using MediatR;
@@ -26,12 +27,53 @@ class GetUserPostsForFeedCommandHandler : IRequestHandler<GetUserPostsForFeedCom
 
     public async Task<ActionResult<Response<IEnumerable<UserPostsDto>>>> Handle(GetUserPostsForFeedCommand request, CancellationToken cancellationToken)
     {
+        // Obtener claims del usuario autenticado
         var claims = await _unitOfWork.ClaimsService.GetUserClaim();
-        var userPosts = await _unitOfWork.PostService.GetUserPostForFeed();
-        //var userPosts = categoriesSearch.Select(x => _mapper.Map<TransportationCategoryDto>(x));
-        var userPostsDto = _mapper.Map<IEnumerable<UserPostsDto>>(userPosts);
+        if (claims is null)
+        {
+            throw new BusinessException("Error de autenticidad", (int)MessageStatusCode.BadRequest);
+        }
 
+        // Obtener lista de usuarios que sigue el usuario autenticado
+        var user = await _unitOfWork.UserService.GetUserById(claims.UserId);
+        if (user is null)
+        {
+            throw new BusinessException("Usuario no encontrado", (int)MessageStatusCode.BadRequest);
+        }
 
-        return new OkObjectResult(new Response<IEnumerable<UserPostsDto>>((int)MessageStatusCode.Succes, userPostsDto));
+        // Obtener posts de usuarios seguidos + propios
+        var userPosts = await _unitOfWork.PostService.GetUserPostForFeed(user.Social.Following, claims.UserId);
+
+        // Mapear los posts a DTO
+        var userPostsDto = new List<UserPostsDto>();
+
+        foreach (var post in userPosts)
+        {
+            // Obtener información del usuario asociado a cada post
+            var postAuthor = await _unitOfWork.UserService.GetUserById(post.AuthorId);
+            if (postAuthor != null)
+            {
+                // Crear el DTO con los datos del usuario y del post
+                var postDto = new UserPostsDto(
+                    post.AuthorId,
+                    post.CodeSnippet,
+                    post.Comments,
+                    post.Description,
+                    post.Tags,
+                    post.Likes,
+                    postAuthor.Username,
+                    postAuthor.ProfilePicture! 
+                );
+
+                userPostsDto.Add(postDto);
+            }
+        }
+
+        // Devolver respuesta exitosa
+        return new OkObjectResult(
+            new Response<IEnumerable<UserPostsDto>>((int)MessageStatusCode.Succes, userPostsDto)
+        );
     }
+
+
 }
