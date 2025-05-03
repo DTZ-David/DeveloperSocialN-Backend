@@ -3,6 +3,7 @@ using Developer.Domain.Ports;
 using Developer.Domain.Ports.Services;
 using System.Threading.Tasks;
 using Developer.Domain.Entities.Posts;
+using Developer.Domain.Entities.User;
 
 namespace Developer.Domain.Services
 {
@@ -23,6 +24,16 @@ namespace Developer.Domain.Services
             await _postRepository.Add(userPosts);
 
             return userPosts;
+        }
+
+        public async Task<List<UserPosts>> GetUserPostById(string id)
+        {
+            var allPosts = await _postRepository.FindAsync(
+                post => post.AuthorId == id);
+
+            return allPosts
+                .OrderByDescending(p => p.CreationDate)
+                .ToList();
         }
 
         public async Task<List<UserPosts>> GetUserPostForFeed(List<string> followedUserIds, string userId)

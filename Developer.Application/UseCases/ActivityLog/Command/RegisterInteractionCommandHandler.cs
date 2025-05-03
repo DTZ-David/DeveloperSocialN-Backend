@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Developer.Domain.Common.Exceptions;
 
 namespace Developer.Application.UseCases.ActivityLog.Command;
 
@@ -29,8 +30,14 @@ public class RegisterInteractionCommandHandler : IRequestHandler<RegisterInterac
 
     public async Task<Response<InteractionLogDto>> Handle(RegisterInteractionCommand request, CancellationToken cancellationToken)
     {
+        var claims = await _unitOfWork.ClaimsService.GetUserClaim();
+        if (claims is null)
+        {
+            throw new BusinessException("Error de autenticidad", (int)MessageStatusCode.BadRequest);
+        }
+
         var interaction = new InteractionLog(
-            request.UserId,
+            claims.UserId,
             request.TargetPostId,
             request.Type,
             request.Content

@@ -2,6 +2,7 @@ using Developer.Application.UseCases.Posts.Commands;
 using Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand;
 using Developer.Application.UseCases.Posts.Commands.ReacctionCommands;
 using Developer.Application.UseCases.Posts.Dtos;
+using Developer.Application.UseCases.Posts.Queries.GetUserPostById;
 using Developer.Application.UseCases.Posts.Queries.GetUserPostForFeed;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
@@ -45,26 +46,14 @@ public class UserPostsController : BaseController
         return await Mediator.Send(new GetUserPostsForFeedCommand());
     }
 
-    [HttpGet("test-token")]
     [Authorize]
-    public IActionResult TestToken()
+    [HttpGet]
+    [Route("GetUserPostById")]
+    public async Task<ActionResult<Response<IEnumerable<UserPostsDto>>>> GetUserPostById()
     {
-        return Ok(new
-        {
-            IsAuthenticated = User.Identity.IsAuthenticated,
-            Claims = User.Claims.Select(c => new { c.Type, c.Value })
-        });
+        return await Mediator.Send(new GetUserPostsByIdCommand());
     }
 
-    [Authorize]
-    [HttpGet("token/test")]
-    public IActionResult TestToken2()
-    {
-        var userId = User.FindFirst("user_id")?.Value;
-        var email = User.FindFirst("email")?.Value;
-
-        return Ok(new { userId, email });
-    }
     [HttpPut("comment/update")]
     public async Task<ActionResult<Response<bool>>> UpdateComment([FromBody] UpdateCommentCommand command)
     {

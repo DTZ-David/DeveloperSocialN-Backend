@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace Developer.Application.UseCases.ActivityLog.Command;
 
 public record RegisterInteractionCommand(
-  string UserId,
   string TargetPostId,
   InteractionType Type,
   string? Content
