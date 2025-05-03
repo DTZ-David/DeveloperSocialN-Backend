@@ -29,7 +29,9 @@ public class UserPostsController : BaseController
     /// <param name="language">The language for the response (e.g., "en", "es").</param>
     /// <response code="200">Successful query.</response>
     /// <response code="404">Query error, client's headquarters not found.</response>
+    [Authorize]
     [HttpPost]
+    [Route("CreatePost")]
     public async Task<ActionResult<Response<UserPostsDto>>> CreateUser(string language, [FromBody] CreateUserPostsCommand command)
     {
         return await Mediator.Send(command);

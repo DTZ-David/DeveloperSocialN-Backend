@@ -44,7 +44,7 @@ namespace Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand
                 var commentsPostUser = new List<Comments>();
 
                 var userPosts = new UserPosts(
-                    authorId: request.AuthorId,
+                    authorId: userClaim.UserId,
                     codeSnippet: request.CodeSnippet,
                     comments: commentsPostUser,
                     description: request.Description,
@@ -57,10 +57,10 @@ namespace Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand
 
                 var UserPostsDto = _mapper.Map<UserPostsDto>(userPosts);
 
-                // Crear la respuesta
+                
                 var response = new Response<UserPostsDto>((int)MessageStatusCode.Create, UserPostsDto);
 
-                // Devolver el resultado creado
+                
                 return new CreatedResult(string.Empty, response);
             
            
