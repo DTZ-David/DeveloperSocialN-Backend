@@ -66,7 +66,4 @@ public class UserPostsController : BaseController
         return await Mediator.Send(command);
     }
 
-
-
-
 }

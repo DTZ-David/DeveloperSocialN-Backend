@@ -46,6 +46,16 @@ class UserService : IUserService
             (int)MessageStatusCode.NotFound);
         return user!;
     }
+
+    public async Task<User> GetUserByUsername(string username)
+    {
+        var user = (await _clientRepository.FindAsync(
+             u => u.Username == username)).FirstOrDefault();
+        _ = user ?? throw new BusinessException(_localizationService.GetLocalizedByKey(MessageCode.NotFound),
+            (int)MessageStatusCode.NotFound);
+        return user!;
+    }
+
     public async Task<User> UpdateUser(User user)
     {
         var existingUser = await _clientRepository.GetById(user.Id);
