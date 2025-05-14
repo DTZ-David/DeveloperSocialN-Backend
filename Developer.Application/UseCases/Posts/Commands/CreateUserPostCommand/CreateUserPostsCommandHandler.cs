@@ -45,12 +45,13 @@ namespace Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand
 
                 var userPosts = new UserPosts(
                     authorId: userClaim.UserId,
+                    codeLanguage: request.CodeLanguage,
                     codeSnippet: request.CodeSnippet,
                     comments: commentsPostUser,
                     description: request.Description,
                     likes: 0,
                     tags: request.Tags!,
-                    reactions: new List<Reaction>()
+                    reactions: new Dictionary<string, int>()
                 );
 
                 await _unitOfWork.PostService.CreatePostAsync(userPosts);

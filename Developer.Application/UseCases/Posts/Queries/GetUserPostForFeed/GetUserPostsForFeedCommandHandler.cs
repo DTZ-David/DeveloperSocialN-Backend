@@ -56,13 +56,16 @@ class GetUserPostsForFeedCommandHandler : IRequestHandler<GetUserPostsForFeedCom
                 // Crear el DTO con los datos del usuario y del post
                 var postDto = new UserPostsDto(
                     post.AuthorId,
+                    post.CreationDate.ToString(),
+                    post.CodeLanguage,
                     post.CodeSnippet,
                     post.Comments,
                     post.Description,
                     post.Tags,
                     post.Likes,
                     postAuthor.Username,
-                    postAuthor.ProfilePicture! 
+                    postAuthor.ProfilePicture!,
+                    post.Reactions
                 );
 
                 userPostsDto.Add(postDto);
