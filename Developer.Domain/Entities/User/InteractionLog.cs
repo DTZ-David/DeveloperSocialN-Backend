@@ -25,7 +25,6 @@ public class InteractionLog : BaseEntity<string>
 }
 public enum InteractionType
 {
-    Like,
     Comentario,
     Confirmacion
 }

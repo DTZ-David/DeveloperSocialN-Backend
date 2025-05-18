@@ -11,11 +11,15 @@ namespace Developer.Domain.Services
     public class UserPostsService : IUserPostsService
     {
         private readonly IGenericRepository<UserPosts> _postRepository;
+        private readonly IGenericRepository<Comments> _commentRepository;
         private readonly ILocalizationService _localizationService;
 
-        public UserPostsService(IGenericRepository<UserPosts> postRepository, ILocalizationService localizationService)
+        
+
+        public UserPostsService(IGenericRepository<UserPosts> postRepository, IGenericRepository<Comments> commentRepository, ILocalizationService localizationService)
         {
             _postRepository = postRepository;
+            _commentRepository = commentRepository;
             _localizationService = localizationService;
         }
 
@@ -49,20 +53,12 @@ namespace Developer.Domain.Services
         }
 
 
-
-
-        public async Task<bool> UpdateCommentAsync(string postId, string commentId, string newContent)
+        public async Task<bool> AddCommentAsync(Comments commentAdd)
         {
-            var userPost = await _postRepository.GetById(postId);
-            if (userPost == null) return false;
+           
+            await _commentRepository.Add(commentAdd);
+            
 
-            var comment = userPost.Comments.FirstOrDefault(c => c.Id == commentId);
-            if (comment == null) return false;
-
-            comment.Comment = newContent;
-            comment.CreationDate = DateTime.UtcNow;
-
-            await _postRepository.Update(userPost); // <== Aquí usamos la sobrecarga correcta
             return true;
         }
 
@@ -77,7 +73,19 @@ namespace Developer.Domain.Services
             await _postRepository.Update(post);
         }
 
+        public async Task<UserPosts> GetUserPostByPostId(string id)
+        {
+            var post = await _postRepository.GetById(id);
 
+            return post;
+        }
+
+        public async Task<UserPosts> UpdatePostAsync(UserPosts post)
+        {
+            await _postRepository.Update(post);
+
+            return post;
+        }
 
     }
 }

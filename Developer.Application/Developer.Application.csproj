@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\ActivityLog\Queries\" />
     <Folder Include="UseCases\Users\Commands\FollowingUser\" />
   </ItemGroup>
 
