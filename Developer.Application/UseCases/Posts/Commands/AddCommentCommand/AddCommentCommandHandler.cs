@@ -68,8 +68,9 @@ namespace Developer.Application.UseCases.Posts.Commands
         {
             return type switch
             {
-                InteractionType.Comentario => "careful",
-                InteractionType.Confirmacion => "verified",
+                InteractionType.Comment => "comment",
+                InteractionType.Verified => "verified",
+                InteractionType.Warning => "warning",
                 _ => throw new ArgumentOutOfRangeException(nameof(type), "Tipo de reacción desconocido")
             };
         }

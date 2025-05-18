@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 namespace Developer.Application.UseCases.Posts.Dtos;
 
 public record CommentDto(
+ string Id,
  string PostId,
  string CommentText,
  InteractionType InteractionType,
  string AuthorId,
- bool IsOwnComment // true si el usuario lo hizo, false si se lo hicieron
+ string AuthorProfilePic, 
+ string UserName, 
+ string SentAt,
+ bool IsOwnComment
 );

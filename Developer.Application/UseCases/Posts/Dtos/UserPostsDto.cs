@@ -6,7 +6,6 @@ public record class UserPostsDto(
     string FechaPublicacion,
     string CodeLanguage,
     string CodeSnippet,
-    List<Comments> Comments,
     string Description,
     List<string> Tags,
     int Likes,

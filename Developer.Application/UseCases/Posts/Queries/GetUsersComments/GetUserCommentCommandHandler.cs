@@ -54,10 +54,14 @@ namespace Developer.Application.UseCases.Posts.Queries.GetUsersComments
                     if (isOwn || isReceived)
                     {
                         result.Add(new CommentDto(
+                            Id : comment.Id,
                             PostId: post.Id,
                             CommentText: comment.Comment,
                             InteractionType: comment.InteractionType,
                             AuthorId: comment.AuthorId,
+                            AuthorProfilePic: user.ProfilePicture!,
+                            UserName: user.Username,
+                            SentAt: comment.CreationDate.ToString(),
                             IsOwnComment: isOwn
                         ));
                     }

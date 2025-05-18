@@ -60,7 +60,6 @@ class GetUserPostsForFeedCommandHandler : IRequestHandler<GetUserPostsForFeedCom
                     post.CreationDate.ToString(),
                     post.CodeLanguage,
                     post.CodeSnippet,
-                    post.Comments,
                     post.Description,
                     post.Tags,
                     post.Likes,

@@ -4,6 +4,8 @@ using Developer.Domain.Ports.Services;
 using System.Threading.Tasks;
 using Developer.Domain.Entities.Posts;
 using Developer.Domain.Entities.User;
+using Developer.Domain.Common.Enums;
+using Developer.Domain.Common.Exceptions;
 
 namespace Developer.Domain.Services
 {
@@ -85,6 +87,18 @@ namespace Developer.Domain.Services
             await _postRepository.Update(post);
 
             return post;
+        }
+
+        public async Task<List<Comments>> GetCommentsByPostId(string postId)
+        {
+            var post = await _postRepository.GetById(postId);
+
+            if (post is null)
+            {
+                throw new BusinessException("Post no encontrado", (int)MessageStatusCode.NotFound);
+            }
+
+            return post.Comments ?? new List<Comments>();
         }
 
     }

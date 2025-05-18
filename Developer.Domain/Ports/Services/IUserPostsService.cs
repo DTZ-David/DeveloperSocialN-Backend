@@ -12,6 +12,7 @@ namespace Developer.Domain.Ports.Services
         Task<bool> AddCommentAsync(Comments comments);
         Task UpdateReactionAsync(string postId, string userId, string reactionType);
         Task<UserPosts> UpdatePostAsync(UserPosts id);
+        Task<List<Comments>> GetCommentsByPostId(string postid);
         
     }
 }

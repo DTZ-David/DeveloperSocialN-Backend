@@ -25,7 +25,8 @@ public class InteractionLog : BaseEntity<string>
 }
 public enum InteractionType
 {
-    Comentario,
-    Confirmacion
+    Verified,
+    Comment,
+    Warning
 }
 

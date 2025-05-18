@@ -1,10 +1,10 @@
 using Developer.Application.UseCases.Posts.Commands;
 using Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand;
-using Developer.Application.UseCases.Posts.Commands.ReacctionCommands;
 using Developer.Application.UseCases.Posts.Dtos;
 using Developer.Application.UseCases.Posts.Queries.GetUserPostById;
 using Developer.Application.UseCases.Posts.Queries.GetUserPostForFeed;
 using Developer.Application.UseCases.Posts.Queries.GetUsersComments;
+using Developer.Application.UseCases.Posts.Queries.GetUsersCommentsByPostId;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
 using MediatR;
@@ -70,12 +70,14 @@ public class UserPostsController : BaseController
     {
         return await Mediator.Send(new GetUserCommentsCommand());
     }
-
-
-    [HttpPut("reactions")]
-    public async Task<ActionResult<Response<string>>> UpdateReaction([FromBody] AddReactionCommand command)
+    [Authorize]
+    [HttpGet]
+    [Route("GetCommentByPostId")]
+    public async Task<ActionResult<Response<IEnumerable<CommentDto>>>> GetUserCommentsByPostId([FromQuery] string postId)
     {
-        return await Mediator.Send(command);
+        return await Mediator.Send(new GetUsersCommentsByPostIdCommand(postId));
     }
+
+
 
 }
