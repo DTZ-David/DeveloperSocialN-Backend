@@ -10,5 +10,7 @@ public record UserDto(
     string Email,
     string UserName,
     string ProfilePicture,
-    string Bio
+    string Bio,
+    int PostsCount,
+    int FollowersCount
     );

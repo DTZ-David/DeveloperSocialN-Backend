@@ -41,7 +41,9 @@ namespace Developer.Application.UseCases.Users.Queries.GetUserByUsername
                 throw new BusinessException("Usuario no encontrado", (int)MessageStatusCode.BadRequest);
             }
 
-            var userDto = new UserDto(user.Email, user.Username, user.ProfilePicture!, user.Bio!);
+            var allPost = await _unitOfWork.PostService.GetUserPostById(claims.UserId);
+
+            var userDto = new UserDto(user.Email, user.Username, user.ProfilePicture!, user.Bio!, allPost.Count, user.Social.Followers.Count);
 
             return new OkObjectResult(
                 new Response<UserDto>((int)MessageStatusCode.Succes, userDto)
