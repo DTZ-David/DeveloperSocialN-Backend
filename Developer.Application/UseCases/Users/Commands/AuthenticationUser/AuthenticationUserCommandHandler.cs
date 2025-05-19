@@ -33,12 +33,15 @@ namespace Developer.Application.UseCases.Users.Commands.AuthenticationUser
                     (int)MessageStatusCode.NotFound);
             }
 
+            var userPosts = await _unitOfWork.PostService.GetUserPostById(user.Id);
+
+
             var userDetails = new AuthenticationUserDto(
                     Token: token,
                     Username: user.Username,
-                    ProfilePicture: user.ProfilePicture,
-                    Bio: user.Bio,
-                    PostsCount: user.Stats.PostsCount,
+                    ProfilePicture: user.ProfilePicture!,
+                    Bio: user.Bio!,
+                    PostsCount: userPosts.Count,
                     FollowersCount: user.Social.Followers.Count);
              
 
