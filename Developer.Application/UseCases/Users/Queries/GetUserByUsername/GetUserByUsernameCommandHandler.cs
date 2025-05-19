@@ -5,6 +5,7 @@ using Developer.Domain.Common.Exceptions;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.Domain.Entities.Posts;
 using Developer.Domain.Ports;
+using Developer.Domain.Settings.Claims;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -40,7 +41,7 @@ namespace Developer.Application.UseCases.Users.Queries.GetUserByUsername
                 throw new BusinessException("Usuario no encontrado", (int)MessageStatusCode.BadRequest);
             }
 
-            var userDto = new UserDto(user.Email, user.Username);
+            var userDto = new UserDto(user.Email, user.Username, user.ProfilePicture!, user.Bio!);
 
             return new OkObjectResult(
                 new Response<UserDto>((int)MessageStatusCode.Succes, userDto)

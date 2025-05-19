@@ -7,5 +7,8 @@ using System.Threading.Tasks;
 namespace Developer.Application.UseCases.User.Dtos;
 
 public record UserDto(
-    string email,
-    string userName);
+    string Email,
+    string UserName,
+    string ProfilePicture,
+    string Bio
+    );

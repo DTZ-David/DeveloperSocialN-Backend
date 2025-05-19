@@ -2,6 +2,7 @@
 using Developer.Application.UseCases.Users.Commands.FollowersUser;
 using Developer.Application.UseCases.Users.Dtos;
 using Developer.Application.UseCases.Users.Queries.GetUserByUsername;
+using Developer.Application.UseCases.Users.Queries.GetUserPostsByEmail;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
 using MediatR;
@@ -48,4 +49,15 @@ public class UserSocialInfoController : BaseController
         return await Mediator.Send(command);
     }
 
+    /// <summary>
+    /// Permite seguir o dejar de seguir a un usuario.
+    /// </summary>
+    /// <param name="command">Datos del seguimiento</param>
+    /// <returns>Resultado con la información de seguidores</returns>
+    [HttpPost]
+    [Route("GetUserPostByEmail")]
+    public async Task<ActionResult<Response<UserPostsDto>>> GetUserPostByEmail([FromBody] GetUserPostsByEmailCommand command)
+    {
+        return await Mediator.Send(command);
+    }
 }

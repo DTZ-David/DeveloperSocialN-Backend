@@ -59,7 +59,6 @@ class GetUserPostsByIdCommandHandler : IRequestHandler<GetUserPostsByIdCommand, 
                      post.CreationDate.ToString(),
                      post.CodeLanguage,
                      post.CodeSnippet,
-                     
                      post.Description,
                      post.Tags,
                      post.Likes,
