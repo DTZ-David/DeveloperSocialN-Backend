@@ -25,8 +25,7 @@ namespace Developer.Application.UseCases.Users.Commands.AuthenticationUser
         public async Task<ActionResult<Response<AuthenticationUserDto>>> Handle(AuthenticationUserCommand request, CancellationToken cancellationToken)
         {
             var token = await _unitOfWork.AccountService.ValidateMobileApp(request.Email, request.Password);
-            var user = await _unitOfWork.UserService.GetUserByEmail(request.Email); // Asumimos que este comando te devuelve un usuario
-
+            var user = await _unitOfWork.UserService.GetUserByEmail(request.Email); 
             if (user is null)
             {
                 throw new BusinessException($"Usuario no encontrado.",

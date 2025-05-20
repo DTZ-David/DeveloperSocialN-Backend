@@ -6,6 +6,10 @@ using Developer.Domain.Ports;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Developer.Domain.Common.Enums;
+using Developer.Application.UseCases.Users.Dtos;
+using Developer.Domain.Entities.Posts;
+using Newtonsoft.Json.Linq;
+using Developer.Domain.Common.Exceptions;
 
 
 
@@ -27,6 +31,13 @@ public record CreateUsersCommandHandler : IRequestHandler<CreateUsersCommand, Ac
     public async Task<ActionResult<Response<UserDto>>> Handle(CreateUsersCommand request, CancellationToken cancellationToken)
     {
 
+        var userToCreate = await _unitOfWork.UserService.GetUserByEmail(request.Email);
+        if (userToCreate is not null)
+        {
+            throw new BusinessException($"Usuario ya se encuentra registrado.", (int)MessageStatusCode.Conflict);
+
+        }
+
         var user = new Domain.Entities.User.User(
             email: request.Email,
             username: request.UserName,
@@ -38,7 +49,14 @@ public record CreateUsersCommandHandler : IRequestHandler<CreateUsersCommand, Ac
         
         await _unitOfWork.UserService.CreateUserAsync(user);
 
-        var userDto = _mapper.Map<UserDto>(user);
+        var userDto = new UserDto(
+                   Email: request.Email,
+                    UserName : request.UserName,
+                    ProfilePicture: request.ProfilePicture,
+                    Bio: request.Bio,
+                    PostsCount: 0,
+                    FollowersCount: 0
+            );
 
         var response = new Response<UserDto>((int)MessageStatusCode.Create, userDto);
 
