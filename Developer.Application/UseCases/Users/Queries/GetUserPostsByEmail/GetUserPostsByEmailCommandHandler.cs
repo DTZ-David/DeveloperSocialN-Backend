@@ -43,17 +43,17 @@ namespace Developer.Application.UseCases.Users.Queries.GetUserPostsByEmail
             var userPosts = await _unitOfWork.PostService.GetUserPostById(user.Id);
 
             var userPostsDto = userPosts.Select(post => new UserPostsDto(
-                Id: post.Id,
-                AuthorId: post.AuthorId,
-                FechaPublicacion: post.CreationDate.ToString(),
-                CodeLanguage: post.CodeLanguage,
-                CodeSnippet: post.CodeSnippet,
-                Description: post.Description,
-                Tags: post.Tags,
-                Likes: post.Likes,
-                UserName: user.Username,
-                ProfilePicture: user.ProfilePicture!,
-                Reactions: post.Reactions
+                id : post.Id,
+                authorId: post.AuthorId,
+                fechaPublicacion: post.CreationDate.ToString(),
+                codeLanguage: post.CodeLanguage,
+                codeSnippet: post.CodeSnippet,
+                description: post.Description,
+                tags: post.Tags,
+                likes: post.Likes,
+                userName: user.Username,
+                profilePicture: user.ProfilePicture!,
+                reactions: post.Reactions
             )).ToList();
 
 

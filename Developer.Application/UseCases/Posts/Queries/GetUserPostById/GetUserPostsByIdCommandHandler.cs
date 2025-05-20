@@ -54,7 +54,7 @@ class GetUserPostsByIdCommandHandler : IRequestHandler<GetUserPostsByIdCommand, 
             {
                 // Crear el DTO con los datos del usuario y del post
                 var postDto = new UserPostsDto(
-                    post.Id,
+                     post.Id,
                      post.AuthorId,
                      post.CreationDate.ToString(),
                      post.CodeLanguage,
