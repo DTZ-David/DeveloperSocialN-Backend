@@ -13,6 +13,5 @@ using System.Threading.Tasks;
 namespace Developer.Application.UseCases.Users.Commands.FollowersUser;
 
 public record UpdateFollowersUserCommand(
- string UserId,
- string FollowerId,
+ string followerEmail,
  bool IsFollowAction) : IRequest<ActionResult<Response<FollowersDto>>>;

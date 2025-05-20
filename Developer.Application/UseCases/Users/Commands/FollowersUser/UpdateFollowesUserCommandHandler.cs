@@ -33,8 +33,14 @@ public record UpdateFollowesUserCommandHandler : IRequestHandler<UpdateFollowers
 
     public async Task<ActionResult<Response<FollowersDto>>> Handle(UpdateFollowersUserCommand request, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserService.GetUserById(request.UserId);
-        var follower = await _unitOfWork.UserService.GetUserById(request.FollowerId);
+
+        var claims = await _unitOfWork.ClaimsService.GetUserClaim();
+        if (claims is null)
+        {
+            throw new BusinessException("Error de autenticidad", (int)MessageStatusCode.BadRequest);
+        }
+        var user = await _unitOfWork.UserService.GetUserById(claims.UserId);
+        var follower = await _unitOfWork.UserService.GetUserByEmail(request.followerEmail);
 
         if (user is null || follower is null)
         {
@@ -42,7 +48,7 @@ public record UpdateFollowesUserCommandHandler : IRequestHandler<UpdateFollowers
                 (int)MessageStatusCode.NotFound);
         }
 
-        if (request.UserId == request.FollowerId)
+        if (claims.Email == request.followerEmail)
         {
             throw new BusinessException("No puedes seguirte a ti mismo.",
                 (int)MessageStatusCode.BadRequest);
@@ -53,16 +59,16 @@ public record UpdateFollowesUserCommandHandler : IRequestHandler<UpdateFollowers
 
         if (request.IsFollowAction)
         {
-            if (!userFollowers.Contains(request.FollowerId))
-                userFollowers.Add(request.FollowerId);
+            if (!userFollowers.Contains(follower.Id))
+                userFollowers.Add(follower.Id);
 
-            if (!followerFollowing.Contains(request.UserId))
-                followerFollowing.Add(request.UserId);
+            if (!followerFollowing.Contains(claims.UserId))
+                followerFollowing.Add(claims.UserId);
         }
         else
         {
-            userFollowers.Remove(request.FollowerId);
-            followerFollowing.Remove(request.UserId);
+            userFollowers.Remove(follower.Id);
+            followerFollowing.Remove(claims.UserId);
         }
 
         await _unitOfWork.UserService.UpdateUser(user);
