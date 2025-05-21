@@ -41,7 +41,8 @@ namespace Developer.Application.UseCases.Users.Commands.AuthenticationUser
                     ProfilePicture: user.ProfilePicture!,
                     Bio: user.Bio!,
                     PostsCount: userPosts.Count,
-                    FollowersCount: user.Social.Followers.Count);
+                    FollowersCount: user.Social.Followers.Count,
+                    false);
              
 
             return new Response<AuthenticationUserDto>((int)MessageStatusCode.Succes, userDetails);

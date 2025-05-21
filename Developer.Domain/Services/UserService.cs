@@ -45,14 +45,14 @@ class UserService : IUserService
         return user!;
     }
 
-    public async Task<List<User>> GetUserByUsername(string username)
+    public async Task<User> GetUserByUsername(string username)
     {
         var loweredUsername = username.ToLower();
 
         var users = await _clientRepository.FindAsync(
             u => u.Username.ToLower().Contains(loweredUsername));
 
-        return users.ToList();
+        return users.FirstOrDefault()!;
     }
 
     public async Task<User> UpdateUser(User user)

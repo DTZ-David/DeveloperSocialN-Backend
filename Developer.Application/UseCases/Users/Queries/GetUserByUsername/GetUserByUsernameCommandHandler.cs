@@ -4,6 +4,7 @@ using Developer.Domain.Common.Enums;
 using Developer.Domain.Common.Exceptions;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.Domain.Entities.Posts;
+using Developer.Domain.Entities.User;
 using Developer.Domain.Ports;
 using Developer.Domain.Settings.Claims;
 using MediatR;
@@ -35,10 +36,10 @@ namespace Developer.Application.UseCases.Users.Queries.GetUserByUsername
                 throw new BusinessException("Error de autenticidad", (int)MessageStatusCode.BadRequest);
             }
 
-            var userToSearch = await _unitOfWork.UserService.GetUserByUsername(request.Username);
-            if (userToSearch is null || !userToSearch.Any())
+            var user = await _unitOfWork.UserService.GetUserByUsername(request.Username);
+            if (user is null)
             {
-                return new OkObjectResult(new Response<List<UserDto>>((int)MessageStatusCode.Succes, new List<UserDto>()));
+                throw new BusinessException("Error", (int)MessageStatusCode.BadRequest);
             }
 
             var myUser = await _unitOfWork.UserService.GetUserById(claims.UserId);
@@ -48,30 +49,15 @@ namespace Developer.Application.UseCases.Users.Queries.GetUserByUsername
             var isFollowing = false;
             foreach (var followerId in myUser.Social.Following)
             {
-                if (followerId == userToSearch.FirstOrDefault()!.Id)
+                if (followerId == user.Id)
                 {
                     isFollowing = true;
                     break; // si quieres salir del ciclo una vez encontrado
                 }
             }
+            var userDto = new UserDto(user.Email, user.Username, user.ProfilePicture!, user.Bio!, allPost.Count, user.Social.Followers.Count, isFollowing);
 
-            var result = userToSearch.Select(user =>
-            {
-              
-                var followersCount = user.Social.Followers.Count;
-               
-                return new UserDto(
-                    user.Email,
-                    user.Username,
-                    user.ProfilePicture ?? string.Empty,
-                    user.Bio ?? string.Empty,
-                    allPost.Count,
-                    followersCount,
-                    isFollowing
-                );
-            }).ToList();
-
-            return new OkObjectResult(new Response<List<UserDto>>((int)MessageStatusCode.Succes, result));
+            return new OkObjectResult(new Response<UserDto>((int)MessageStatusCode.Succes, userDto));
 
         }
     }

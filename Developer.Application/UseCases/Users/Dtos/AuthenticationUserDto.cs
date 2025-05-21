@@ -12,7 +12,8 @@ public record AuthenticationUserDto(
     string ProfilePicture,
     string Bio,
     int PostsCount,
-    int FollowersCount
+    int FollowersCount,
+    bool CurrentFollow
 );
 
 public record AccountDto(string Email, string Password);
