@@ -34,20 +34,45 @@ namespace Developer.Application.UseCases.Users.Queries.GetUserByUsername
             {
                 throw new BusinessException("Error de autenticidad", (int)MessageStatusCode.BadRequest);
             }
-            
-            var user = await _unitOfWork.UserService.GetUserByUsername(request.Username);
-            if (user is null)
+
+            var userToSearch = await _unitOfWork.UserService.GetUserByUsername(request.Username);
+            if (userToSearch is null || !userToSearch.Any())
             {
-                throw new BusinessException("Usuario no encontrado", (int)MessageStatusCode.BadRequest);
+                return new OkObjectResult(new Response<List<UserDto>>((int)MessageStatusCode.Succes, new List<UserDto>()));
             }
+
+            var myUser = await _unitOfWork.UserService.GetUserById(claims.UserId);
 
             var allPost = await _unitOfWork.PostService.GetUserPostById(claims.UserId);
 
-            var userDto = new UserDto(user.Email, user.Username, user.ProfilePicture!, user.Bio!, allPost.Count, user.Social.Followers.Count);
+            var isFollowing = false;
+            foreach (var followerId in myUser.Social.Following)
+            {
+                if (followerId == userToSearch.FirstOrDefault()!.Id)
+                {
+                    isFollowing = true;
+                    break; // si quieres salir del ciclo una vez encontrado
+                }
+            }
 
-            return new OkObjectResult(
-                new Response<UserDto>((int)MessageStatusCode.Succes, userDto)
-            );
+            var result = userToSearch.Select(user =>
+            {
+              
+                var followersCount = user.Social.Followers.Count;
+               
+                return new UserDto(
+                    user.Email,
+                    user.Username,
+                    user.ProfilePicture ?? string.Empty,
+                    user.Bio ?? string.Empty,
+                    allPost.Count,
+                    followersCount,
+                    isFollowing
+                );
+            }).ToList();
+
+            return new OkObjectResult(new Response<List<UserDto>>((int)MessageStatusCode.Succes, result));
+
         }
     }
 }

@@ -12,5 +12,6 @@ public record UserDto(
     string ProfilePicture,
     string Bio,
     int PostsCount,
-    int FollowersCount
+    int FollowersCount,
+    bool CurrentFollow
     );

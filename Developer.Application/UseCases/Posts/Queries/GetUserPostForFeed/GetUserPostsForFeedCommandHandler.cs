@@ -49,26 +49,35 @@ class GetUserPostsForFeedCommandHandler : IRequestHandler<GetUserPostsForFeedCom
 
         foreach (var post in userPosts)
         {
+            Console.WriteLine($"Post: {post.Id}, Author: {post.AuthorId}");
             // Obtener información del usuario asociado a cada post
             var postAuthor = await _unitOfWork.UserService.GetUserById(post.AuthorId);
             if (postAuthor != null)
             {
                 // Crear el DTO con los datos del usuario y del post
-                var postDto = new UserPostsDto(
-                    post.Id,
-                    post.AuthorId,
-                    post.CreationDate.ToString(),
-                    post.CodeLanguage,
-                    post.CodeSnippet,
-                    post.Description,
-                    post.Tags,
-                    post.Likes,
-                    postAuthor.Username,
-                    postAuthor.ProfilePicture!,
-                    post.Reactions
-                );
+                try
+                {
+                    var postDto = new UserPostsDto(
+                        post.Id,
+                        post.AuthorId,
+                        post.CreationDate.ToString(),
+                        post.CodeLanguage,
+                        post.CodeSnippet,
+                        post.Description,
+                        post.Tags ?? new List<string>(),
+                        post.Likes,
+                        postAuthor.Username,
+                        postAuthor.ProfilePicture ?? string.Empty,
+                        post.Reactions ?? new Dictionary<string, int>()
+                    );
 
-                userPostsDto.Add(postDto);
+                    userPostsDto.Add(postDto);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al mapear post {post.Id}: {ex.Message}");
+                }
+
             }
         }
 

@@ -3,6 +3,7 @@ using Developer.Application.UseCases.Posts.Commands.CreateUserPostCommand;
 using Developer.Application.UseCases.Posts.Dtos;
 using Developer.Application.UseCases.Posts.Queries.GetUserPostById;
 using Developer.Application.UseCases.Posts.Queries.GetUserPostForFeed;
+using Developer.Application.UseCases.Posts.Queries.GetUserPostsByUserSearchId;
 using Developer.Application.UseCases.Posts.Queries.GetUsersComments;
 using Developer.Application.UseCases.Posts.Queries.GetUsersCommentsByPostId;
 using Developer.Domain.Common.Wrappers.CustomResponse;
@@ -78,6 +79,13 @@ public class UserPostsController : BaseController
         return await Mediator.Send(new GetUsersCommentsByPostIdCommand(postId));
     }
 
+    [Authorize]
+    [HttpGet]
+    [Route("GetUserPostByUserIdSearch")]
+    public async Task<ActionResult<Response<IEnumerable<UserPostsDto>>>> GetUserPostByUserIdSearch([FromQuery] string email)
+    {
+        return await Mediator.Send(new GetUserPostsByUserSearchIdCommand(email));
+    }
 
 
 }

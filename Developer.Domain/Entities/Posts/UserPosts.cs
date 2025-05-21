@@ -20,6 +20,10 @@ namespace Developer.Domain.Entities.Posts
             Tags = tags;
             Reactions = reactions;
         }
+        public UserPosts()
+        {
+            
+        }
 
         public string AuthorId { get;  set; }
         public string CodeLanguage { get; set; }

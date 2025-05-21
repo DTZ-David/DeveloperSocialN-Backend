@@ -55,7 +55,8 @@ public record CreateUsersCommandHandler : IRequestHandler<CreateUsersCommand, Ac
                     ProfilePicture: request.ProfilePicture,
                     Bio: request.Bio,
                     PostsCount: 0,
-                    FollowersCount: 0
+                    FollowersCount: 0,
+                    CurrentFollow: false
             );
 
         var response = new Response<UserDto>((int)MessageStatusCode.Create, userDto);

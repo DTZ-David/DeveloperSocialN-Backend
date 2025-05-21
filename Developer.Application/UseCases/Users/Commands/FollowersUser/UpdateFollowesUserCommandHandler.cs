@@ -30,60 +30,54 @@ public record UpdateFollowesUserCommandHandler : IRequestHandler<UpdateFollowers
         _unitOfWork = unitOfWork;
         _localizationService = localizationService;
     }
-
     public async Task<ActionResult<Response<FollowersDto>>> Handle(UpdateFollowersUserCommand request, CancellationToken cancellationToken)
     {
-
         var claims = await _unitOfWork.ClaimsService.GetUserClaim();
         if (claims is null)
         {
             throw new BusinessException("Error de autenticidad", (int)MessageStatusCode.BadRequest);
         }
-        var user = await _unitOfWork.UserService.GetUserById(claims.UserId);
-        var follower = await _unitOfWork.UserService.GetUserByEmail(request.followerEmail);
 
-        if (user is null || follower is null)
+        var user = await _unitOfWork.UserService.GetUserById(claims.UserId); // quien hace la acción
+        var targetUser = await _unitOfWork.UserService.GetUserByEmail(request.followerEmail); // a quién quiere seguir/dejar de seguir
+
+        if (user is null || targetUser is null)
         {
-            throw new BusinessException($"Usuario no encontrado.",
-                (int)MessageStatusCode.NotFound);
+            throw new BusinessException("Usuario no encontrado.", (int)MessageStatusCode.NotFound);
         }
 
-        if (claims.Email == request.followerEmail)
+        if (user.Id == targetUser.Id)
         {
-            throw new BusinessException("No puedes seguirte a ti mismo.",
-                (int)MessageStatusCode.BadRequest);
+            throw new BusinessException("No puedes seguirte a ti mismo.", (int)MessageStatusCode.BadRequest);
         }
 
-        var userFollowers = user.Social.Followers;
-        var followerFollowing = follower.Social.Following;
+        var isFollowing = targetUser.Social.Followers.Contains(user.Id);
 
-        if (request.IsFollowAction)
+        if (isFollowing)
         {
-            if (!userFollowers.Contains(follower.Id))
-                userFollowers.Add(follower.Id);
-
-            if (!followerFollowing.Contains(claims.UserId))
-                followerFollowing.Add(claims.UserId);
+            // Dejar de seguir
+            targetUser.Social.Followers.Remove(user.Id);
+            user.Social.Following.Remove(targetUser.Id);
         }
         else
         {
-            userFollowers.Remove(follower.Id);
-            followerFollowing.Remove(claims.UserId);
+            // Seguir
+            targetUser.Social.Followers.Add(user.Id);
+            user.Social.Following.Add(targetUser.Id);
         }
 
         await _unitOfWork.UserService.UpdateUser(user);
-        await _unitOfWork.UserService.UpdateUser(follower);
+        await _unitOfWork.UserService.UpdateUser(targetUser);
 
         var dto = new FollowersDto(
-             user.Id,
-             user.Social.Followers.Count,
-             user.Social.Followers
-         );
-
+            targetUser.Id,
+            targetUser.Social.Followers.Count,
+            targetUser.Social.Followers
+        );
 
         var response = new Response<FollowersDto>((int)MessageStatusCode.Succes, dto);
         return new OkObjectResult(response);
-
     }
+
 
 }
