@@ -1,11 +1,14 @@
-﻿using Developer.Application.UseCases.User.Dtos;
+﻿using Developer.Application.UseCases.Posts.Queries.GetUserPostForFeed;
+using Developer.Application.UseCases.User.Dtos;
 using Developer.Application.UseCases.Users.Commands.FollowersUser;
 using Developer.Application.UseCases.Users.Dtos;
+using Developer.Application.UseCases.Users.Queries.GetConnectionsForProfile;
 using Developer.Application.UseCases.Users.Queries.GetUserByUsername;
 using Developer.Application.UseCases.Users.Queries.GetUserPostsByEmail;
 using Developer.Domain.Common.Wrappers.CustomResponse;
 using Developer.WebApi.Common.Constants;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -59,5 +62,13 @@ public class UserSocialInfoController : BaseController
     public async Task<ActionResult<Response<UserPostsDto>>> GetUserPostByEmail([FromBody] GetUserPostsByEmailCommand command)
     {
         return await Mediator.Send(command);
+    }
+
+    [Authorize]
+    [HttpGet]
+    [Route("GetConnections")]
+    public async Task<ActionResult<Response<IEnumerable<UserDto>>>> GetConnections()
+    {
+        return await Mediator.Send(new GetConnectionsForProfileCommand());
     }
 }
