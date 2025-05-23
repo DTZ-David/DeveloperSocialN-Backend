@@ -1,6 +1,8 @@
 ﻿using Developer.Application.UseCases.Posts.Queries.GetUserPostForFeed;
 using Developer.Application.UseCases.User.Dtos;
 using Developer.Application.UseCases.Users.Commands.FollowersUser;
+using Developer.Application.UseCases.Users.Commands.UpdateProfilePicture;
+using Developer.Application.UseCases.Users.Commands.UpdateUsername;
 using Developer.Application.UseCases.Users.Dtos;
 using Developer.Application.UseCases.Users.Queries.GetConnectionsForProfile;
 using Developer.Application.UseCases.Users.Queries.GetUserByUsername;
@@ -70,5 +72,29 @@ public class UserSocialInfoController : BaseController
     public async Task<ActionResult<Response<IEnumerable<UserDto>>>> GetConnections()
     {
         return await Mediator.Send(new GetConnectionsForProfileCommand());
+    }
+
+    /// <summary>
+    /// Permite seguir o dejar de seguir a un usuario.
+    /// </summary>
+    /// <param name="command">Datos del seguimiento</param>
+    /// <returns>Resultado con la información de seguidores</returns>
+    [HttpPut]
+    [Route("UpdateProfilePic")]
+    public async Task<ActionResult<Response<UserDto>>> UpdateProfilePic([FromBody] UpdateProfilePictureCommand command)
+    {
+        return await Mediator.Send(command);
+    }
+
+    /// <summary>
+    /// Permite seguir o dejar de seguir a un usuario.
+    /// </summary>
+    /// <param name="command">Datos del seguimiento</param>
+    /// <returns>Resultado con la información de seguidores</returns>
+    [HttpPut]
+    [Route("UpdateUsername")]
+    public async Task<ActionResult<Response<UserDto>>> UpdateUsername([FromBody] UpdateUsernameCommand command)
+    {
+        return await Mediator.Send(command);
     }
 }
